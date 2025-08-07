@@ -1,6 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv
+import sys
 
 # Load environment variables from .env file
 load_dotenv()
@@ -23,10 +24,11 @@ def fetch_pr_changes(repo_owner: str, repo_name: str, pr_number: int) -> list:
     }
 
     try:
-        print("@@",requests)
+        print("Request",requests)
 
         # Fetch the PR metadata
         pr_response = requests.get(pr_url, headers=headers)
+        print("PR Response:", pr_response, file=sys.stderr)
         pr_response.raise_for_status()   # Method from requests library, checks status code of response, if status code is not 200, it raises an HTTPError
         pr_data = pr_response.json()
 
@@ -35,8 +37,8 @@ def fetch_pr_changes(repo_owner: str, repo_name: str, pr_number: int) -> list:
         files_response.raise_for_status()
         files_data = files_response.json()
 
-        print("PR Data:", pr_data)
-        print("Files Data:", files_data)
+        print("PR Data:", pr_data, file=sys.stderr)
+        print("Files Data:", files_data, file=sys.stderr)
     
         # Combine PR metadata and files data
         changes = []
@@ -65,9 +67,9 @@ def fetch_pr_changes(repo_owner: str, repo_name: str, pr_number: int) -> list:
             'changes': changes
         }
 
-        print(f"Successfully fetched PR changes!")
+        print(f"Successfully fetched PR changes!", file=sys.stderr)
         return pr_info
 
     except Exception as e:
-        print(f"Error fetching PR changes: {e}")
+        print(f"Error fetching PR changes: {e}", file=sys.stderr)
         return None

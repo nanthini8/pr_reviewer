@@ -78,6 +78,7 @@ class PRAnalyzer:
         except Exception as e:
             print(f"Error running MCP server: {e}")
 
+# Ensure the script runs only if it's the main module
 if __name__ == "__main__":
     analyzer = PRAnalyzer()
     analyzer.run()
