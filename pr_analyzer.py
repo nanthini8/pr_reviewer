@@ -10,7 +10,7 @@ class PRAnalyzer:
     def __init__(self):
         load_dotenv()
         self.mcp = FastMCP("github_pr_analyzer")
-        print("MCP Server initialized", file=sys.stderr)
+        print("MCP Server initialized", file=sys.stderr)  # By default print() writes to sys.stdout.
         self._init_notion()
         self._register_tools()
 
@@ -78,6 +78,7 @@ class PRAnalyzer:
         except Exception as e:
             print(f"Error running MCP server: {e}")
 
+# Ensure the script runs only if it's the main module
 if __name__ == "__main__":
     analyzer = PRAnalyzer()
     analyzer.run()
